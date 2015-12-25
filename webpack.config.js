@@ -12,11 +12,9 @@ const PATHS = {
 
 var common = {
   entry: PATHS.app,
-  // Drop `output` for now; as webpack-dev-server runs in-memory we can handle the build later.
-  /*output: {
-    path: PATHS.build,
-    filename: 'bundle.js'
-  },*/
+  resolve: {
+    extensions: ['', '.js', '.jsx']
+  },
   module: {
     loaders: [
       {
@@ -24,6 +22,12 @@ var common = {
         test: /\.css$/,
         loaders: ['style', 'css'],
         // Include accepts either a path or an array of paths.
+        include: PATHS.app
+      },
+      // Set up jsx. This accepts js too thanks to regex.
+      {
+        test: /\.jsx?$/,
+        loaders: ['babel'],
         include: PATHS.app
       }
     ]
