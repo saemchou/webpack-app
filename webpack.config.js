@@ -1,18 +1,22 @@
 var path = require('path');
 var HtmlwebpackPlugin = require('html-webpack-plugin');
 var webpack = require('webpack');
+var merge = require('webpack-merge');
 
+
+const TARGET = process.env.npm_lifecycle_event;
 const PATHS = {
   app: path.join(__dirname, 'app'),
   build: path.join(__dirname, 'build')
 }
 
-module.exports = {
+var common = {
   entry: PATHS.app,
-  output: {
+  // Drop `output` for now; as webpack-dev-server runs in-memory we can handle the build later.
+  /*output: {
     path: PATHS.build,
     filename: 'bundle.js'
-  },
+  },*/
   module: {
     loaders: [
       {
@@ -24,23 +28,32 @@ module.exports = {
       }
     ]
   },
-  devServer: {
-    historyApiFallback: true,
-    hot: true,
-    inline: true,
-    progress: true,
-
-    // Display only errors to limit the amount of output.
-    stats: 'errors-only',
-
-    // Parse host and port from env so this is easy to customise.
-    host: process.env.HOST,
-    port: process.env.PORT
-  },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
     new HtmlwebpackPlugin({
       title: 'Kanban app'
     })
   ]
 };
+
+if (TARGET === 'start' || !TARGET) {
+  // Default configs.
+  module.exports = merge(common, {
+    devtool: 'eval-source-map',
+    devServer: {
+      historyApiFallback: true,
+      hot: true,
+      inline: true,
+      progress: true,
+
+      // Display only errors to limit the amount of output.
+      stats: 'errors-only',
+
+      // Parse host and port from env so this is easy to customise.
+      host: process.env.HOST,
+      port: process.env.PORT
+    },
+    plugins: [
+      new webpack.HotModuleReplacementPlugin()
+    ]
+  });
+}
