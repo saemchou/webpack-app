@@ -10,6 +10,9 @@ const PATHS = {
   build: path.join(__dirname, 'build')
 }
 
+// Let Babel know what environment we're in. Since it will need to be aware of our React Hot loading.
+process.env.BABEL_ENV = TARGET;
+
 var common = {
   entry: PATHS.app,
   resolve: {
