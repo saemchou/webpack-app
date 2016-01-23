@@ -32,8 +32,15 @@ export default class App extends React.Component {
     )
   }
 
-  editNote (noteId, task) {
-    console.log('Hello - editNote - ', noteId, task);
+  editNote = (noteId, task) => {
+    const notes = this.state.notes.map((note) => {
+      if(note.id === noteId) {
+        note.task = task;
+      }
+      return note;
+    });
+
+    this.setState({notes});
   }
 
   addNote = () => {
