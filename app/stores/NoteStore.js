@@ -8,14 +8,29 @@ class NoteStore {
 
     this.notes = [];
   }
+
   create(note) {
+    const notes = this.notes;
 
+    note.id = uuid.v4();
+    this.setState({
+      notes: notes.concat(note)
+    });
   }
+
   update({id, task}) {
-
+    const notes = this.notes.map((note) => {
+      if(note.id === id) {
+        note.task = task;
+      }
+      return note;
+    });
+    this.setState({notes});
   }
-  delete(id) {
 
+  delete(id) {
+    const notes = this.notes.filter((note) => note.id !== id);
+    this.setState({notes});
   }
 }
 
