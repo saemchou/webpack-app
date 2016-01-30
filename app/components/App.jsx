@@ -1,26 +1,24 @@
 import uuid from 'node-uuid';
 import React from 'react';
 import Notes from './Notes.jsx';
+import NoteStore from '../stores/NoteStore.js';
+import NoteActions from '../actions/NoteActions.js';
 
 export default class App extends React.Component {
   constructor (props) {
     super(props);
-    this.state = {
-      notes: [
-        {
-          id: uuid.v4(),
-          task: 'Learn Webpack'
-        },
-        {
-          id: uuid.v4(),
-          task: 'Learn React'
-        },
-        {
-          id: uuid.v4(),
-          task: 'Do laundry'
-        }
-      ]
-    }
+    this.state = NoteStore.getState();
+  }
+  componentDidMount() {
+    NoteStore.listen(this.storeChanged);
+  }
+  componentWillUnmount() {
+    NoteStore.unlisten(this.storeChanged);
+  }
+  storeChanged = (state) => {
+    // Without a property initializer `this` wouldn't
+    // point at the right context (defaults to `undefined` in strict mode).
+    this.setState(state);
   }
 
   render () {
@@ -34,29 +32,15 @@ export default class App extends React.Component {
     )
   }
 
-  editNote = (id, task) => {
-    const notes = this.state.notes.map((note) => {
-      if(note.id === id) {
-        note.task = task;
-      }
-      return note;
-    });
+  addNote = () => {
+    NoteActions.create({task: 'New task'});
+  }
 
-    this.setState({notes});
+  editNote = (id, task) => {
+    NoteActions.update({id, task});
   }
 
   deleteNote = (id) => {
-    this.setState({
-      notes: this.state.notes.filter((note) => note.id !== id)
-    });
-  }
-
-  addNote = () => {
-    this.setState({
-      notes: this.state.notes.concat([{
-        id: uuid.v4(),
-        task: 'New task'
-      }])
-    });
+    NoteActions.delete(id);
   }
 };
