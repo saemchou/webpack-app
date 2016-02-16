@@ -15,7 +15,7 @@ export default class App extends React.Component {
           <AltContainer
               stores={[LaneStore]}
               inject={{
-                items: () => LaneStore.getState().lanes
+                items: () => LaneStore.getState().lanes || []
               }}
           >
             <Lanes onEdit={this.editLane} onDelete={this.deleteLane}/>
@@ -25,7 +25,7 @@ export default class App extends React.Component {
   }
 
   addLane = () => {
-    LaneActions.create({task: 'New task'});
+    LaneActions.create({task: 'New lane'});
   }
 
   editLane = (id, task) => {
