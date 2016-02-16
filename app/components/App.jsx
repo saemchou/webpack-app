@@ -18,7 +18,7 @@ export default class App extends React.Component {
                 items: () => LaneStore.getState().lanes || []
               }}
           >
-            <Lanes onEdit={this.editLane} onDelete={this.deleteLane}/>
+            <Lanes />
           </AltContainer>
       </div>
     )
