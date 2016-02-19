@@ -25,7 +25,7 @@ export default class App extends React.Component {
   }
 
   addLane = () => {
-    LaneActions.create({task: 'New lane'});
+    LaneActions.create({name: 'New lane'});
   }
 
   editLane = (id, task) => {
