@@ -10,6 +10,7 @@ class LaneStore {
   }
 
   create(lane) {
+    console.log('Creating lane');
     const lanes = this.lanes;
 
     lane.id = uuid.v4();
