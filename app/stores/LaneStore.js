@@ -1,6 +1,7 @@
 import uuid from 'node-uuid';
 import alt from '../libs/alt';
 import LaneActions from '../actions/LaneActions';
+import NoteStore from '../stores/NoteStore';
 
 class LaneStore {
   constructor() {

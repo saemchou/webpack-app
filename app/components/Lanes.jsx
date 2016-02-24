@@ -8,6 +8,7 @@ export default class Lanes extends React.Component {
 
     return(
         <div className="lanes">
+          <hr/>
           {lanes.map(this.renderLane)}
         </div>
     )

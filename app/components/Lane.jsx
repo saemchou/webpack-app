@@ -6,14 +6,16 @@ import NoteActions from '../actions/NoteActions';
 import LaneActions from '../actions/LaneActions';
 
 export default class Lane extends React.Component {
+
   constructor(props) {
     super(props);
 
     const id = props.lane.id;
 
-    this.addNote.bind(this, id);
-    this.deleteNote.bind(this, id);
+    this.addNote = this.addNote.bind(this, id);
+    this.deleteNote = this.deleteNote.bind(this, id);
   }
+
   render() {
     const {lane, ...props} = this.props;
     return (
