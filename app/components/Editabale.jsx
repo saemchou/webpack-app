@@ -42,4 +42,23 @@ export default class Editabale extends React.Component {
   renderDelete = () => {
     return <button className="delete" onClick={this.props.onDelete}>x</button>;
   }
+
+  edit = () => {
+    this.setState({
+      editing: true
+    });
+  }
+
+  checkEnter = (e) => {
+    if(e.key === 'Enter') {
+      this.finishEdit(e);
+    }
+  }
+
+  finishEdit = (e) => {
+    this.props.onEdit(e.target.value);
+    this.setState({
+      editing: false
+    });
+  }
 }
