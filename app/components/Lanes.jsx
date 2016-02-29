@@ -15,6 +15,8 @@ export default class Lanes extends React.Component {
   }
 
   renderLane(lane) {
-    return <Lane className="lane" key={lane.id} lane={lane}/>
+    if (lane != null) {
+      return <Lane className="lane" key={lane.id} lane={lane}/>
+    }
   }
 }

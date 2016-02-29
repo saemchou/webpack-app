@@ -14,8 +14,8 @@ export default class Lane extends React.Component {
     const id = props.lane.id;
 
     this.editName = this.editName.bind(this, id);
-    this.addNote = this.addNote.bind(this, id);
-    this.deleteNote = this.deleteNote.bind(this, id);
+    this.addLane = this.addLane.bind(this, id);
+    this.deleteLane = this.deleteLane.bind(this, id);
   }
 
   render() {
@@ -29,7 +29,7 @@ export default class Lane extends React.Component {
               onEdit={this.editName}
             />
             <div className="lane-add-note">
-              <button onClick={this.addNote}>+</button>
+              <button onClick={this.addLane}>+</button>
             </div>
           </div>
 
@@ -40,7 +40,7 @@ export default class Lane extends React.Component {
                 items: () => NoteStore.get(lane.notes) || []
               }}>
 
-            <Notes onEdit={this.editNote} onDelete={this.deleteNote} />
+            <Notes onEdit={this.editLane} onDelete={this.deleteLane} />
 
           </AltContainer>
         </div>
@@ -49,18 +49,19 @@ export default class Lane extends React.Component {
 
   editName(id, name) {
     console.log('edited lane name', id, name);
+    LaneActions.update({id, name});
   }
 
-  addNote(laneId) {
+  addLane(laneId) {
     NoteActions.create({task: 'New task'});
     LaneActions.attachToLane({laneId});
   }
 
-  editNote(id, task) {
+  editLane(id, task) {
     NoteActions.update({id, task});
   }
 
-  deleteNote(laneId, noteId) {
+  deleteLane(laneId, noteId) {
     LaneActions.detachFromLane({laneId, noteId});
     NoteActions.delete(noteId);
   }

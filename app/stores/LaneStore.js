@@ -21,6 +21,17 @@ class LaneStore {
     });
   }
 
+  update({id, name}) {
+    const lanes = this.lanes.map((lane) => {
+      if(lane.id === id) {
+        lane.name = name;
+      }
+      return lane;
+    });
+
+    this.setState({lanes});
+  }
+
   attachToLane({laneId, noteId}) {
     if(!noteId) {
       this.waitFor(NoteStore);
