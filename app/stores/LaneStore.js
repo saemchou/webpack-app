@@ -32,6 +32,10 @@ class LaneStore {
     this.setState({lanes});
   }
 
+  delete(id) {
+    this.setState(this.lanes.filter((lane) => lane.id !== id));
+  }
+
   attachToLane({laneId, noteId}) {
     if(!noteId) {
       this.waitFor(NoteStore);
